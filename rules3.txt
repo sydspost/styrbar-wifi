@@ -1,0 +1,9 @@
+on WiFi#Connected do
+  if [Var#4]=0
+    // Calibrate Domoticz
+    Publish domoticz/in,'{"idx": [Var#3], "command": "setcolbrightnessvalue", "color": {"b":0,"cw":0,"g":0,"m":2,"r":0,"t":255,"ww":0}, "parse": false}'
+    Publish domoticz/in,'{"idx": [Var#3], "command": "switchlight", "switchcmd": "Set Level", "level": 100 }'
+    Publish domoticz/in,'{"idx": [Var#3], "command": "switchlight", "switchcmd": "Off", "parse": false}'
+    Let,4,1
+  endif
+endon

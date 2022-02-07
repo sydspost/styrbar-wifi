@@ -1,0 +1,55 @@
+Let,3,277                    // Change this to your Domoticz IDX
+
+on Sync_on_off#on_off=0 do   // Brighter button pressed on device
+    timerSet,6,1
+endon
+
+on Sync_dim#Dim=0 do         // Dim button pressed on device
+    timerSet,7,1
+endon
+
+on Sync_warm#WarmWhite=0 do  // Warm button pressed on device
+  if [WarmWhite#WarmWhite]<5
+    Let,2,[WarmWhite#WarmWhite]*51+51
+    Publish domoticz/in,'{"idx": [Var#3], "command": "setcolbrightnessvalue", "color": {"b":0,"cw":0,"g":0,"m":2,"r":0,"t":[Var#2],"ww":0}, "parse": false}'
+    Let,2,[WarmWhite#WarmWhite]+1
+    TaskValueSet,3,1,[Var#2]
+  endif
+endon
+
+on Sync_cold#WarmWhite=0 do  // Cold button pressed on device
+  if [WarmWhite#WarmWhite]>1
+    Let,2,[WarmWhite#WarmWhite]*51-51
+    Publish domoticz/in,'{"idx": [Var#3], "command": "setcolbrightnessvalue", "color": {"b":0,"cw":0,"g":0,"m":2,"r":0,"t":[Var#2],"ww":0}, "parse": false}'
+    Let,2,[WarmWhite#WarmWhite]-1
+    TaskValueSet,3,1,[Var#2]
+  endif
+endon
+
+on rules#timer=6 do            // Shortpress:Switch on, longpress:Brighter
+  if [Sync_on_off#on_off]=1    // Check if longpress or not
+    Publish domoticz/in,'{"idx": [Var#3], "command": "switchlight", "switchcmd": "On", "parse": false}'
+    TaskValueSet,1,1,1
+  else
+    if [Dim#Dim]<5
+      Let,1,[Dim#Dim]*20+20
+      Publish domoticz/in,'{"idx": [Var#3], "command": "switchlight", "switchcmd": "Set Level", "level": [Var#1] }'
+      Let,1,[Dim#Dim]+1
+      TaskValueSet,2,1,[Var#1]
+    endif
+  endif
+endon
+
+on rules#timer=7 do           // Shortpress:Switch off, longpress:Dim
+  if [Sync_dim#Dim]=1         // Check if longpress or not
+    Publish domoticz/in,'{"idx": [Var#3], "command": "switchlight", "switchcmd": "Off", "parse": false}'
+    TaskValueSet,1,1,0
+  else
+    if [Dim#Dim]>1
+      Let,1,[Dim#Dim]*20-20
+      Publish domoticz/in,'{"idx": [Var#3], "command": "switchlight", "switchcmd": "Set Level", "level": [Var#1] }'
+      Let,1,[Dim#Dim]-1
+      TaskValueSet,2,1,[Var#1]
+    endif
+  endif
+endon

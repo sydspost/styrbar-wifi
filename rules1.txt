@@ -1,0 +1,59 @@
+on System#Boot do
+  Let,4,0                            // If 0 perform On WiFi#Connected
+  longpulse_ms,5,0,6500              // Max brigthness
+  TaskValueSet 1,1,0                 // Update dummy device with defaults
+  TaskValueSet 2,1,5
+  TaskValueSet 3,1,5
+  TimerSet,5,10                      // After 10sec device off
+endon
+
+on on_off do                         // http event on_off
+  if %eventvalue%=0
+    pulse,14,0,50                    // Device off
+  else
+    pulse,5,0,50                     // Device on
+  endif
+  TaskValueSet 1,1,%eventvalue%
+endon
+
+on dim do                            // http event dim
+  if %eventvalue%-[Dim#Dim]>0 
+    looptimerset_ms,1,1300,%eventvalue%-[Dim#Dim]             // Brighter
+    TaskValueSet 2,1,%eventvalue%
+  endif
+  if [Dim#Dim]-%eventvalue%>=1
+    looptimerset_ms,2,1300,[Dim#Dim]-%eventvalue%             // Dim
+    TaskValueSet 2,1,%eventvalue%
+  endif
+endon
+
+on warmwhite do                     // http event warmwhite
+  if %eventvalue%-[WarmWhite#WarmWhite]>0 
+    looptimerset_ms,3,1000,%eventvalue%-[WarmWhite#WarmWhite] // Warmer
+    TaskValueSet 3,1,%eventvalue%
+  endif
+  if [WarmWhite#WarmWhite]-%eventvalue%>=1
+    looptimerset_ms,4,1000,[WarmWhite#WarmWhite]-%eventvalue% // Colder
+    TaskValueSet 3,1,%eventvalue%
+  endif
+endon
+
+on Rules#Timer=1 do                // Brighter
+  Longpulse_ms,5,0,1300
+endon
+
+on Rules#Timer=2 do                // Dim
+  Longpulse_ms,14,0,1300
+endon
+
+on Rules#Timer=3 do                // Warmer
+  Longpulse_ms,4,0,1000
+endon
+
+on Rules#Timer=4 do                // Colder
+  Longpulse_ms,12,0,1000
+endon
+
+on Rules#Timer=5 do                // Device off
+  pulse,14,0,50
+endon

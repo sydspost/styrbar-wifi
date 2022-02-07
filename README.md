@@ -1,7 +1,7 @@
 # styrbar-wifi
 IKEA Styrbar Remote connected to a Wemos D1 mini and controlled by Domoticz
 
-For the full story, check my (dutch) website https://www.sydspost.nl/index.php/2022/01/29/ikea-tradfri-lamp-aansturen-met-domoticz/?preview_id=1997&preview_nonce=8598c11c88&preview=true
+For the full story, check my (dutch) website https://www.sydspost.nl/index.php/2022/01/29/ikea-tradfri-lamp-aansturen-met-domoticz/
 
 In short the steps:
 1. Solder jumpercables on VCC, GND and PA01, PA02, PA03 PA04 pins of the MGM210L chip

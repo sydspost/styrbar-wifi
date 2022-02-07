@@ -15,3 +15,5 @@ In short the steps:
 7. Change IDX in rulesset 3 in ESPEasy
 8. Import Node-red flow in Node-Red. Change MQTT and HTTP-Request nodes, configure your MQTT server settings and hostnames.
 9. Enjoy!
+
+Note: Work in progress: Node-red sending events to ESPEasy based on MQTT, replacing the HTTP-requests

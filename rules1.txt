@@ -7,6 +7,7 @@ on System#Boot do
   TimerSet,5,10                      // After 10sec device off
 endon
 
+// HTTP event handling
 on on_off do                         // http event on_off
   if %eventvalue%=0
     pulse,14,0,50                    // Device off

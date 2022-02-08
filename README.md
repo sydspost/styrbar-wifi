@@ -10,11 +10,9 @@ In short the steps:
 ![Wiring schema Tradfri](https://user-images.githubusercontent.com/45944257/152876224-8205941d-667a-43d8-aff0-9a506edf1a15.png)
 
 3. Flash ESPEasy Mega on Wemos D1 mini
-4. In ESPEasy configure Domoticz MQTT controller, three dummy devices called on_off, dim and warmwhite. And four switches for GPIO-4, GPIO-5, GPIO-12 and GPIO-14, enable longpress for 500ms on low and high, name the switches sync_on_off, sync_dim, sync_warm, sync_cold, enable rules.
+4. In ESPEasy configure Domoticz MQTT controller, three dummy devices called on_off, dim and warmwhite. And four switches for GPIO-4, GPIO-5, GPIO-12 and GPIO-14, enable longpress for 500ms on low and high, name the switches sync_on_off, sync_dim, sync_warm, sync_cold. Create device MQTT import, name in MQTTin, add 3 topics on_off, dim, warmwhite, values on_off, dim, warmwhite. Enable rules.
 5. Copy - Paste rules1.txt, rules2.txt and rules3.txt on the rules tab
 6. Add a dummy device in Domoticz, type: color switch, subtype: ww, remember IDX
 7. Change IDX in rulesset 3 in ESPEasy
-8. Import Node-red flow in Node-Red. Change MQTT and HTTP-Request nodes, configure your MQTT server settings and hostnames.
+8. Import Node-red flow in Node-Red. Change MQTTin and MQTTout nodes, configure your MQTT server settings and hostnames.
 9. Enjoy!
-
-Note: Work in progress: Node-red sending events to ESPEasy based on MQTT, replacing the HTTP-requests

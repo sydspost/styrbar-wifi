@@ -7,3 +7,16 @@ on WiFi#Connected do
     Let,4,1
   endif
 endon
+
+// MQTT Event handling
+on MQTTin#on_off do
+  event,on_off=[MQTTin#on_off]
+endon
+
+on MQTTin#dim do
+  event,dim=[MQTTin#dim]
+endon
+
+on MQTTin#warmwhite do
+  event,warmwhite=[MQTTin#warmwhite]
+endon
